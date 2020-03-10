@@ -644,8 +644,9 @@ click_get_cycles()
     __asm__ __volatile__ ("rdtsc" : "=a" (xlo), "=d" (xhi));
     return xlo;
 #elif CLICK_MINIOS
-    /* FIXME: Implement click_get_cycles for MiniOS */
-    return 0;
+    uint32_t xlo, xhi;
+    __asm__ __volatile__ ("rdtsc" : "=a" (xlo), "=d" (xhi));
+    return xlo | (((uint64_t) xhi) << 32);
 #else
     // add other architectures here
     return 0;
