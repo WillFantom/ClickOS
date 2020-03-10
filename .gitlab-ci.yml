@@ -1,0 +1,19 @@
+image: alpine:latest
+
+stages:
+  - build
+
+variables:
+  REF_NAME: master
+
+trigger_build:
+  stage: build
+  script:
+    - apk add curl
+    - "curl -X POST \  
+        --form \"variables[EXTRA_FLAGS]=--enable-local --with-netmap --enable-ipsec\" \ 
+        --form \"variables[STATS_LEVEL]=2\" \ 
+        --form \"variables[CLICKOS_REPO]=${CI_PROJECT_URL}\" \ 
+        --form \"variables[CLICKOS_BR]=${CI_COMMIT_REF_NAME}\" \ 
+        --form \"variables[TAG]=${CI_COMMIT_REF_NAME}\" \ 
+        --form \"token=${CI_JOB_TOKEN}\" --form \"ref=${REF_NAME}\" --url https://gitlab.com/api/v4/projects/17375961/trigger/pipeline"
