@@ -84,6 +84,7 @@ CLICK_OBJS0		 =		\
 	timer.o				\
 	timerset.o			\
 	timestamp.o			\
+	unimon.o     \
 	variableenv.o
 CLICK_OBJS		 = $(addprefix $(CLICK_OBJ_DIR)/,$(CLICK_OBJS0))
 CLICK_DEPS		 = $(patsubst %.o,%.d,$(CLICK_OBJS))

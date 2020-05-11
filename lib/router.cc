@@ -87,6 +87,9 @@ Router::Router(const String &configuration, Master *master)
 {
     _refcount = 0;
     _runcount = 0;
+#if CLICK_MINIOS
+		_unimon = new Unimon();
+#endif
     _root_element = new ErrorElement;
     _root_element->attach_router(this, -1);
     master->register_router(this);

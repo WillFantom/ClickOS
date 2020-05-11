@@ -9,6 +9,9 @@
 #if CLICK_NS
 # include <click/simclick.h>
 #endif
+#if CLICK_MINIOS
+# include <click/unimon.hh>
+#endif
 CLICK_DECLS
 class Master;
 class ElementFilter;
@@ -192,6 +195,10 @@ class Router { public:
     };
     /** @endcond never */
 
+#if CLICK_MINIOS
+    inline Unimon* unimon() const;
+#endif
+
 #if CLICK_NS
     simclick_node_t *simnode() const;
     int sim_get_ifid(const char* ifname);
@@ -275,6 +282,9 @@ class Router { public:
     Element* _root_element;
     String _configuration;
 
+#if CLICK_MINIOS
+    Unimon* _unimon;
+#endif
     struct notifier_signals_t {
 	enum { capacity = 4096 };
 	String name;
@@ -580,6 +590,14 @@ Router::arena_factory() const
 {
     return _arena_factory;
 }
+
+#if CLICK_MINIOS
+inline Unimon*
+Router::unimon() const
+{
+    return _unimon;
+}
+#endif
 
 /** @brief Returns the currently-installed router this router will eventually
  * replace.
