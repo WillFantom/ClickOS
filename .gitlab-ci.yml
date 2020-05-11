@@ -4,7 +4,7 @@ stages:
   - build
 
 variables:
-  REF_NAME: master
+  REF_NAME: latest
 
 trigger_build:
   stage: build
