@@ -5,8 +5,8 @@
 #include <click/config.h>
 #include <click/unimon.hh>
 
-Unimon::Unimon() {
-  int a = 1+2;
+Unimon::Unimon(Router *r) {
+  this->_parent_router = r;
 }
 
 bool

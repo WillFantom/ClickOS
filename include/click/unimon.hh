@@ -1,6 +1,7 @@
 #ifndef CLICK_UNIMON_HH
 #define CLICK_UNIMON_HH
 
+#include <click/router.hh>
 #include <click/element.hh>
 
 #if CLICK_MINIOS
@@ -22,9 +23,16 @@ CLICK_DECLS
 
 class Unimon;
 
+struct xenstore_dev {
+	domid_t dom;
+	char *nodename;
+	xenbus_event_queue events;
+} *xsdev = NULL;
+
 typedef struct umdata {
   uint64_t export_time;
-
+  uint64_t data_size;
+  void *data;
 } umdata_t;
 class Unimon { public:
 
@@ -33,9 +41,7 @@ class Unimon { public:
     xenstore = 1
   };
 
-
-
-  Unimon();
+  Unimon(Router *r);
   ~Unimon();
 
   String version() const { return "v0.1"; }
@@ -46,6 +52,7 @@ class Unimon { public:
 
 private:
 
+  Router *_parent_router;
   Vector<Element *> _registered;
 
 };
