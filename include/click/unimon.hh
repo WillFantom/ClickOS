@@ -4,24 +4,49 @@
 #include <click/element.hh>
 
 #if CLICK_MINIOS
-extern "C"{
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+  extern "C"{
+  #include <stdlib.h>
+  #include <stdio.h>
+  #include <string.h>
 
-#include <mini-os/xenbus.h>
-#include <mini-os/shutdown.h>
-#include <mini-os/sched.h>
-}
+  #include <mini-os/xenbus.h>
+  }
+
+# define XS_ROOT_PATH "data/clickos/unimon"
+# define XS_PATH_MAX_LEN 1024
+# define XS_UNIMON_TOKEN "unimon-watch"
+
 #endif
 
 CLICK_DECLS
 
 class Unimon;
 
+typedef struct umdata {
+  uint64_t export_time;
+
+} umdata_t;
 class Unimon { public:
 
+  enum {
+    print = 0,
+    xenstore = 1
+  };
+
+
+
   Unimon();
+  ~Unimon();
+
+  String version() const { return "v0.1"; }
+
+  bool register_element(Element *e);
+
+  void export_data(umdata_t *data);
+
+private:
+
+  Vector<Element *> _registered;
 
 };
 
