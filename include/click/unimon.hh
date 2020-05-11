@@ -1,33 +1,35 @@
 #ifndef CLICK_UNIMON_HH
 #define CLICK_UNIMON_HH
 
-#include <click/router.hh>
 #include <click/element.hh>
 
 #if CLICK_MINIOS
-  extern "C"{
-  #include <stdlib.h>
-  #include <stdio.h>
-  #include <string.h>
+extern "C"{
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-  #include <mini-os/xenbus.h>
-  }
+#include <mini-os/xenbus.h>
+}
 
 # define XS_ROOT_PATH "data/clickos/unimon"
 # define XS_PATH_MAX_LEN 1024
 # define XS_UNIMON_TOKEN "unimon-watch"
+# define XS_UNIMON_DID_TRUST 0
 
 #endif
 
 CLICK_DECLS
 
+class Router;
+
 class Unimon;
 
-struct xenstore_dev {
+struct xs_dev {
 	domid_t dom;
 	char *nodename;
 	xenbus_event_queue events;
-} *xsdev = NULL;
+};
 
 typedef struct umdata {
   uint64_t export_time;
@@ -54,6 +56,7 @@ private:
 
   Router *_parent_router;
   Vector<Element *> _registered;
+  struct xs_dev *_xsdev;
 
 };
 

@@ -283,7 +283,7 @@ class Router { public:
     String _configuration;
 
 #if CLICK_MINIOS
-    Unimon* _unimon;
+    Unimon *_unimon;
 #endif
     struct notifier_signals_t {
 	enum { capacity = 4096 };
