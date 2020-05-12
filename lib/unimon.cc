@@ -4,17 +4,18 @@
  */
 #include <click/config.h>
 #include <click/unimon.hh>
-#include <click/straccum.hh>
+#include <click/glue.hh>
 
 Unimon::Unimon(Router *r)
 {
   this->_parent_router = r;
 
-  this->_xsdev = (struct xs_dev*) calloc(1, sizeof(struct xs_dev));
   char version_path[XS_PATH_MAX_LEN];
   snprintf(version_path, XS_PATH_MAX_LEN, "%s/version", XS_ROOT_PATH);
   xenbus_write(XBT_NIL, version_path, this->version().c_str());
   write_status((char *)"present");
+  this->_control_thread = create_thread((char *)"unimon", this->control_thread, NULL);
+  schedule();
 }
 
 Unimon::~Unimon()
@@ -41,6 +42,22 @@ Unimon::export_data(umdata_t *data, mechanism ex)
   };
 }
 
+void 
+Unimon::control_thread(void *data) 
+{
+  struct xs_dev *_xsdev = (struct xs_dev*) calloc(1, sizeof(struct xs_dev));
+  char control_path[XS_PATH_MAX_LEN];
+  snprintf(control_path, XS_PATH_MAX_LEN, "%s/control", XS_ROOT_PATH);
+  xenbus_watch_path_token(XBT_NIL, control_path, XS_UNIMON_TOKEN, &_xsdev->events);
+  for(;;) {
+    char **path;
+    path = xenbus_wait_for_watch_return(&_xsdev->events);
+    if (!path)
+      continue;
+  };
+
+}
+
 void
 Unimon::write_status(char *status)
 {
@@ -50,15 +67,15 @@ Unimon::write_status(char *status)
 }
 
 void
-write_data_xs(char* path, char *data)
+Unimon::xs_write_data(char *path, char *data)
 {
   
 }
 
 void 
-write_data_xs(char *path, uint64_t data)
+Unimon::xs_write_data(char *path, uint64_t data)
 {
   char str_data[MAX_ELEM_NAME_LEN];
   snprintf(str_data, MAX_ELEM_NAME_LEN, "%d", data);
-  write_data_xs(path, str_data);
+  xs_write_data(path, str_data);
 }

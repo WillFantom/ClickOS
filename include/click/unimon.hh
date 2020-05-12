@@ -10,6 +10,7 @@ extern "C"{
 #include <string.h>
 
 #include <mini-os/xenbus.h>
+#include <mini-os/sched.h>
 }
 
 # define XS_ROOT_PATH "data/clickos/unimon"
@@ -33,9 +34,9 @@ struct xs_dev {
 
 typedef struct umdata {
   uint64_t export_time;
-  uint64_t data_size;
+  uint64_t data_count;
   char elem_name[MAX_ELEM_NAME_LEN];
-  void *data;
+  uint64_t *data_arr;
 } umdata_t;
 
 class Unimon { public:
@@ -59,8 +60,13 @@ private:
   Router *_parent_router;
   Vector<Element *> _registered;
   struct xs_dev *_xsdev;
+  struct thread *_control_thread;
+
+  static void control_thread(void *data);
 
   void write_status(char *status);
+  void xs_write_data(char *path, uint64_t data);
+  void xs_write_data(char *path, char *data);
 
 };
 

@@ -112,6 +112,10 @@ Router::~Router()
     // Delete the ArenaFactory, which detaches the Arenas
     delete _arena_factory;
 
+#if CLICK_MINIOS
+		delete _unimon;
+#endif
+
     // Clean up elements in reverse configuration order
     if (_state == ROUTER_LIVE) {
 	// Unschedule tasks and timers
