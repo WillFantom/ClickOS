@@ -16,8 +16,8 @@ extern "C"{
 # define XS_PATH_MAX_LEN 1024
 # define XS_UNIMON_TOKEN "unimon-watch"
 # define XS_UNIMON_DID_TRUST 0
-
 #endif
+#define MAX_ELEM_NAME_LEN 128
 
 CLICK_DECLS
 
@@ -34,11 +34,13 @@ struct xs_dev {
 typedef struct umdata {
   uint64_t export_time;
   uint64_t data_size;
+  char elem_name[MAX_ELEM_NAME_LEN];
   void *data;
 } umdata_t;
+
 class Unimon { public:
 
-  enum {
+  enum export_type {
     print = 0,
     xenstore = 1
   };
@@ -50,13 +52,15 @@ class Unimon { public:
 
   bool register_element(Element *e);
 
-  void export_data(umdata_t *data);
+  void export_data(umdata_t *data, export_type ex);
 
 private:
 
   Router *_parent_router;
   Vector<Element *> _registered;
   struct xs_dev *_xsdev;
+
+  void write_status(char *status);
 
 };
 
