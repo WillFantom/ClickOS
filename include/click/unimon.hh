@@ -40,7 +40,7 @@ typedef struct umdata {
 
 class Unimon { public:
 
-  enum export_type {
+  enum mechanism {
     print = 0,
     xenstore = 1
   };
@@ -52,7 +52,7 @@ class Unimon { public:
 
   bool register_element(Element *e);
 
-  void export_data(umdata_t *data, export_type ex);
+  void export_data(umdata_t *data, mechanism ex);
 
 private:
 

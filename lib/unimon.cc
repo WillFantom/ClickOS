@@ -30,7 +30,7 @@ Unimon::register_element(Element *e)
 }
 
 void
-Unimon::export_data(umdata_t *data, export_type ex)
+Unimon::export_data(umdata_t *data, mechanism ex)
 {
   switch(ex) {
     case 0: break;
