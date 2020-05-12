@@ -59,14 +59,13 @@ private:
 
   Router *_parent_router;
   Vector<Element *> _registered;
-  struct xs_dev *_xsdev;
   struct thread *_control_thread;
 
   static void control_thread(void *data);
 
   void write_status(char *status);
   void xs_write_data(char *path, uint64_t data);
-  void xs_write_data(char *path, char *data);
+  uint64_t average_data(uint64_t *data, uint64_t count);
 
 };
 

@@ -20,7 +20,7 @@ Unimon::Unimon(Router *r)
 
 Unimon::~Unimon()
 {
-  free(this->_xsdev);
+  
 }
 
 bool
@@ -38,6 +38,8 @@ Unimon::export_data(umdata_t *data, mechanism ex)
     case 1: 
       char data_path[XS_PATH_MAX_LEN];
       snprintf(data_path, XS_PATH_MAX_LEN, "%s/data/%s/%d", XS_ROOT_PATH, data->elem_name, data->export_time);
+      uint64_t value = this->average_data(data->data_arr, data->data_count);
+      this->xs_write_data(data_path, value);
       break;
   };
 }
@@ -66,16 +68,21 @@ Unimon::write_status(char *status)
   xenbus_write(XBT_NIL, status_path, status);
 }
 
-void
-Unimon::xs_write_data(char *path, char *data)
-{
-  
-}
-
 void 
 Unimon::xs_write_data(char *path, uint64_t data)
 {
   char str_data[MAX_ELEM_NAME_LEN];
   snprintf(str_data, MAX_ELEM_NAME_LEN, "%d", data);
-  xs_write_data(path, str_data);
+  xenbus_write(XBT_NIL, path, str_data);
+}
+
+uint64_t
+Unimon::average_data(uint64_t *data, uint64_t count)
+{
+  uint64_t sum = 0;
+  for (uint64_t c = 0 ; c<count ; c++) {
+    sum += data[c];
+  };
+  //todo: check for div by 0 
+  return (sum/count);
 }
