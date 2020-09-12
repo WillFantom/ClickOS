@@ -268,6 +268,11 @@ Prebuilt images can be found on dockerhub (built with xen 4.14 sources):
 
     docker run --rm -v $(pwd):/output willfantom/clickos:latest
 
+To get an up and ready build environment via docker (with xen 4.14) you can 
+run the following from you ClickOS root directory:
+
+    docker run --rm -it $(pwd):/sources/clickos willfantom/clickos:dev
+
 To compile a ClickOS image you must first build all its' dependencies. For
 convenience we bundle these in a repository called toolchain. The
 toolchain contains 'newlib' and 'lwip' that 'mini-os' requires in
