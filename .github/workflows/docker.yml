@@ -5,10 +5,6 @@ on:
     branches:
       - latest
       - dev
-  pull_request:
-    branches:
-      - latest 
-      - dev
 
 jobs:
   build-clickos:
