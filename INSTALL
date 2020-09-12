@@ -264,6 +264,10 @@ Support for running Click as an operating system was originally
 developed by Joao Martins, Filipe Manco, Mohamed Ahmed and Felipe Huici at
 NEC Laboratories Europe.
 
+Prebuilt images can be found on dockerhub (built with xen 4.14 sources):
+
+    docker run --rm -v $(pwd):/output willfantom/clickos:latest
+
 To compile a ClickOS image you must first build all its' dependencies. For
 convenience we bundle these in a repository called toolchain. The
 toolchain contains 'newlib' and 'lwip' that 'mini-os' requires in
