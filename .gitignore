@@ -19,3 +19,6 @@ installch
 man
 stamp-egroup
 stamp-h
+
+**/.DS_Store
+.vscode/
