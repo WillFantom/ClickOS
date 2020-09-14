@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - latest
-      - dev
 
 jobs:
   build-clickos:
