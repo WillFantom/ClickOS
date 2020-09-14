@@ -827,6 +827,7 @@ enable_standard
 enable_tcpudp
 enable_test
 enable_threads
+enable_unimon
 enable_wifi
 enable_experimental
 enable_skip_elements
@@ -1515,6 +1516,7 @@ Optional Features:
   --disable-tcpudp        do not include TCP and UDP elements
   --disable-test          do not include regression test elements
   --disable-threads       do not include thread management elements
+  --enable-unimon         include UNIMON elements
   --enable-wifi           include wifi elements and support
   --enable-experimental   enable experimental elements in normal groups
   --enable-skip-elements=ELTS disable comma-separated elements
@@ -6976,6 +6978,17 @@ else
 fi
 test "x$enable_all_elements" = xyes -a \( "x$enable_threads" = xNO -o "x$enable_threads" = x \) && enable_threads=yes
 if test "x$enable_threads" = xyes; then
+    :
+
+fi
+# Check whether --enable-unimon was given.
+if test "${enable_unimon+set}" = set; then :
+  enableval=$enable_unimon;
+else
+  enable_unimon=NO
+fi
+test "x$enable_all_elements" = xyes -a \( "x$enable_unimon" = xNO -o "x$enable_unimon" = x \) && enable_unimon=yes
+if test "x$enable_unimon" = xyes; then
     :
 
 fi
@@ -14532,4 +14545,3 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
-
