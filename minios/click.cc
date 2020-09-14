@@ -47,6 +47,7 @@
 #include <click/string.hh>
 #include <click/straccum.hh>
 #include <click/driver.hh>
+#include <click/unimon.hh>
 
 extern "C"{
 #include <stdlib.h>
@@ -131,6 +132,7 @@ read_config(u_int rid = 0)
 #define MAX_ROUTERS	64
 static ErrorHandler *errh;
 static Master master(1);
+static Unimon *unimon;
 
 struct router_instance {
 	Router *r;
@@ -333,6 +335,7 @@ int main(int argc, char **argv)
 
 	click_static_initialize();
 	errh = ErrorHandler::default_handler();
+	unimon = &Unimon();
 
 	xsdev = (struct xenstore_dev*) malloc(len);
 	memset(xsdev, 0, len);
