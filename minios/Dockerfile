@@ -2,6 +2,7 @@ ARG UBUNTU_VERSION=xenial
 FROM ubuntu:${UBUNTU_VERSION} AS builder
 
 ## Deps
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -yq \
     autoconf \
     automake \
@@ -66,9 +67,11 @@ RUN mkdir -p /out \
  && mv ${CLICKOS_ROOT}/minios/build/* /out
 
 ## Multi-Stage Niceness
-FROM alpine:latest
+FROM busybox
 
-COPY --from=builder /out/clickos_x86_64* /clickos/
-RUN mkdir -p /output
+COPY --from=builder /out/clickos_x86_64 /clickos/
+COPY --from=builder /out/clickos_x86_64.gz /clickos/
+COPY --from=builder /out/clickos_x86_64_nostrip /clickos/
 
-ENTRYPOINT [ "cp", "-R", "/clickos", "/output" ]
+WORKDIR /clickos
+ENTRYPOINT [ "cp", "-va", ".", "/output" ]
