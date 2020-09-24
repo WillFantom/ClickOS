@@ -6988,10 +6988,10 @@ else
   enable_unimon=NO
 fi
 test "x$enable_all_elements" = xyes -a \( "x$enable_unimon" = xNO -o "x$enable_unimon" = x \) && enable_unimon=yes
-if test "x$enable_unimon" = xyes; then
-    :
-
+if test "x$enable_unimon" = xyes; then :
+  $as_echo "#define HAVE_UNIMON 1" >>confdefs.h
 fi
+
 # Check whether --enable-wifi was given.
 if test "${enable_wifi+set}" = set; then :
   enableval=$enable_wifi;
