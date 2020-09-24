@@ -56,6 +56,8 @@ public:
   Unimon();
   ~Unimon();
 
+#if HAVE_UNIMON
+
   String version() const { return "v0.0.1"; }
 
   bool register_element(Element *e);
@@ -71,6 +73,8 @@ private:
   bool setup_xenstore();
   bool write_to_xenstore(char *path, const char *data);
   static void xs_event_check(void *data);
+
+#endif
 
 };
 

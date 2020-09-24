@@ -10,6 +10,9 @@
 
 Unimon::Unimon()
 {
+#if !HAVE_UNIMON
+  printf("Unimon: Disabled\n");
+#else
   printf("Unimon: Enabled\n");
 
   if(this->setup_xenstore()) {
@@ -19,11 +22,14 @@ Unimon::Unimon()
   char *version_string = new char();
   sprintf(version_string, "Unimon Version: %s", this->version().c_str());
   click_chatter(version_string);
+#endif
 }
 
 Unimon::~Unimon()
 {
 }
+
+#if HAVE_UNIMON
 
 bool Unimon::register_element(Element *e)
 {
@@ -101,3 +107,5 @@ void Unimon::xs_event_check(void *data)
   };
 #endif
 }
+
+#endif
