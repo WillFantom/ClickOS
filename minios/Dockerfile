@@ -22,7 +22,7 @@ ENV MINIOS_ROOT ${BASE_DIR}/minios
 ENV CLICKOS_ROOT ${BASE_DIR}/clickos
 
 ## Xen Hypervisor Code
-ARG XEN_BR=stable-4.14
+ARG XEN_BR=RELEASE-4.11.4
 ARG XEN_REPO=https://github.com/xen-project/xen
 # Cache Break
 ARG XEN_CACHE_TWEAK="Add the date to this arg to break the cache here"
